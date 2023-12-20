@@ -92,6 +92,27 @@ class ModelCreator():
         )
         return model
     
+    def test_build_model(self, hp):
+        inputs = tf.keras.Input(input_shape)
+        x = tf.keras.layers.LSTM(hp.Int('units', min_value=1028, max_value=2048, step=512))(inputs)  # Hier variieren wir die Anzahl der LSTM-Einheiten
+
+        pitch_output = tf.keras.layers.Dense(128, name='pitch')(x)
+        step_output = tf.keras.layers.Dense(1, name='step')(x)
+        duration_output = tf.keras.layers.Dense(1, name='duration')(x)
+
+        model = tf.keras.Model(inputs, [pitch_output, step_output, duration_output])
+
+        # Kompilieren des Modells mit der optimierten Lernrate
+        model.compile(
+            loss=loss,
+            optimizer=tf.keras.optimizers.Adam(
+                hp.Choice('learning_rate', values=[1e-2, 1e-3, 1e-4])  # Hier variieren wir die Lernrate
+            )
+            # ,metrics=['mean_squared_error', 'mean_absolute_error']
+        )
+        return model
+
+    
     def print_statistics(self, loss_and_metrics):
         # Loss auf den Validierungsdaten ausgeben, sollte nahe 0 sein
         print(f'Verlust (Loss) auf den Validierungsdaten: {loss_and_metrics[0]}')
@@ -145,7 +166,7 @@ class ModelCreator():
         optimizer = tf.keras.optimizers.legacy.Adam(learning_rate=learning_rate)
 
         tuner = kt.Hyperband(
-            self.build_model,
+            self.test_build_model,
             objective='loss',
             max_epochs=20,
             hyperband_iterations=2

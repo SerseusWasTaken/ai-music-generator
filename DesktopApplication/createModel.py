@@ -1,5 +1,5 @@
 from modelAPI import MusicRNN
-from DesktopApplication.ModelCreator import ModelCreator
+from ModelCreator import ModelCreator
 import tensorflow as tf
 import pathlib
 import glob

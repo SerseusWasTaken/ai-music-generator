@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import HORIZONTAL, ttk
 from pygame import mixer
 #Music generation related
 from helperFunctions import mse_with_positive_pressure
@@ -8,9 +8,11 @@ import tensorflow as tf
 from modelAPI import MusicRNN
 import pathlib
 import glob
+from customtkinter import *
 
 def generateMusicFile():
-    model = tf.keras.saving.load_model('models/tuner_best_mode.keras')
+    #todo: prüfe ob path bei allen richtig oder ob model in assets holen
+    model = tf.keras.saving.load_model('../models/tuner_best_mode.keras')
     modelAPI = MusicRNN(model, 2.0, 128)
 
     data_dir = pathlib.Path('data/maestro-v3.0.0')
@@ -81,6 +83,7 @@ def homeFrame():
 # creates Window
 root = tk.Tk()
 root.title("Little Conductor")
+
 # start size window + where opens 
 root.geometry("1200x800+100+100") 
 root.minsize(400, 300)  # width, height
@@ -129,7 +132,6 @@ btn_mute = ttk.Button(inner, image=unmute_img, command=lambda: mute(), compound=
 btn_unmute = ttk.Button(inner, image=mute_img, command=lambda: unmute(), compound=tk.CENTER)
 btn_play.grid(row=0, column=0, padx=10, pady=10)
 btn_mute.grid(row=0, column=1, padx=10, pady=10)
-
 
 homeFrame()
 # keeps windwo visible

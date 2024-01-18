@@ -13,6 +13,12 @@ from customtkinter import *
 import threading
 from tkinter import PhotoImage
 
+from Abc.AbcModelAPI import AbcModelAPI
+
+#Model management
+use_abc_model = False
+abcModel = AbcModelAPI('./abc/training_checkpoints')
+
 #Variablen User
 temperature = 1
 
@@ -23,7 +29,7 @@ app = CTk(fg_color="#4f6367")
 app.geometry("1200x800+100+100")
 app.minsize(800, 800)  # width, height
 app.title("Little Conductor")
-app.iconbitmap(default="assets\icon.ico")
+#app.iconbitmap(default="assets\icon.ico")
 
 set_appearance_mode("light")
 
@@ -34,7 +40,12 @@ loadingFrame = CTkFrame(master=app, width=1200, height=800, fg_color="#4f6367")
 playerFrame = CTkFrame(master=app, width=1200, height=800, fg_color="#4f6367")
 
 #Methoden
-def generateMusicFile():
+def generateUsingAbcModel():
+    global abcModel
+    abcModel.generate_song()
+    switchToPlayer()
+
+def generateUsingMIDIModel():
     #todo: prüfe ob path bei allen richtig oder ob model in assets holen
     model = tf.keras.saving.load_model('../models/tuner_best_mode.keras')
     modelAPI = MusicRNN(model, 2.0, 128)
@@ -59,13 +70,24 @@ def slider_event(value):
     temperature = value
 
 def generateButton():
+    global use_abc_model
     homeFrame.pack_forget()
     loadingFrame.pack()
 
-    t = threading.Thread(target=generateMusicFile)
-    t.start()
+    if use_abc_model:
+        t = threading.Thread(target=generateUsingAbcModel)
+        t.start()
+    else:
+        t = threading.Thread(target=generateUsingMIDIModel)
+        t.start()
 
-def playMusic(path):
+def playMusic():
+    path = ''
+    if use_abc_model: 
+        path = 'tmp.wav'
+    else:
+        path = 'output.mid'
+
     mixer.music.load(path)
     mixer.music.play()
 
@@ -101,7 +123,8 @@ def home():
 
 #todo: switch Model
 def switchModel():
-    print("switch Model")
+    global use_abc_model
+    use_abc_model = not use_abc_model
 
 #Define  Interface Home
 dev = CTkLabel(homeFrame, text="Developer: Bach, Sailer, Schlecht", text_color="white", font=("Comfortaa", 13), bg_color="#4f6367", height=10)
@@ -152,7 +175,7 @@ inner = CTkFrame(playerFrame, width=140, height=70)
 #fg_color="#4f6367",  text_color="#FE5F55",
 btnPause = CTkButton(master = inner, image=pause_img,command=pauseMusic, bg_color="transparent", fg_color="transparent", hover_color="#87A9B0",  height=50, text="")
 btnMute = CTkButton(master = inner, image=mute_img,  command=mute,  bg_color="transparent", fg_color="transparent", hover_color="#87A9B0", height=50, text="")
-btnPlay = CTkButton(master = inner, image=play_img, command=lambda: playMusic("output.mid"), bg_color="transparent", fg_color="transparent", hover_color="#87A9B0", height=50, text="")
+btnPlay = CTkButton(master = inner, image=play_img, command=lambda: playMusic(), bg_color="transparent", fg_color="transparent", hover_color="#87A9B0", height=50, text="")
 btnUnmute = CTkButton(master = inner, image=unmute_img, command=unmute, bg_color="transparent", fg_color="transparent",hover_color="#87A9B0",  height=50, text="")
 
 # Mute/Unmute und Play/Pause switchen wenn gedrückt

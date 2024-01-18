@@ -46,9 +46,10 @@ def generateUsingAbcModel():
     switchToPlayer()
 
 def generateUsingMIDIModel():
+    global temperature
     #todo: prüfe ob path bei allen richtig oder ob model in assets holen
     model = tf.keras.saving.load_model('../models/tuner_best_mode.keras')
-    modelAPI = MusicRNN(model, 2.0, 128)
+    modelAPI = MusicRNN(model, temperature, 128)
 
     data_dir = pathlib.Path('data/maestro-v3.0.0')
     if not data_dir.exists():
@@ -67,6 +68,7 @@ def generateUsingMIDIModel():
 
 # todo: 
 def slider_event(value):
+    global temperature
     temperature = value
 
 def generateButton():

@@ -15,6 +15,7 @@ from tkinter import PhotoImage
 
 from Abc.AbcModelAPI import AbcModelAPI
 
+
 #Model management
 use_abc_model = False
 abcModel = AbcModelAPI('./abc/training_checkpoints')
@@ -123,10 +124,13 @@ def home():
     inner.grid_forget()
     homeFrame.pack()
 
-#todo: switch Model
 def switchModel():
     global use_abc_model
     use_abc_model = not use_abc_model
+    if use_abc_model:
+        sliderTemperature.configure(state="disabled", button_color="gray", progress_color="gray")
+    else:
+        sliderTemperature.configure(state="normal",progress_color="#FE5F55", button_color="#FE5F55")
 
 #Define  Interface Home
 dev = CTkLabel(homeFrame, text="Developer: Bach, Sailer, Schlecht", text_color="white", font=("Comfortaa", 13), bg_color="#4f6367", height=10)

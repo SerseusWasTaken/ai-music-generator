@@ -34,10 +34,11 @@ app.title("Little Conductor")
 set_appearance_mode("light")
 
 # Frames 
-homeFrame = CTkFrame(master=app, width=1200, height=800, fg_color="#4f6367")
+homeFrame = CTkFrame(app, width=1200, height=800, fg_color="#4f6367")
 homeFrame.pack(expand=False)
-loadingFrame = CTkFrame(master=app, width=1200, height=800, fg_color="#4f6367")
-playerFrame = CTkFrame(master=app, width=1200, height=800, fg_color="#4f6367")
+loadingFrame = CTkFrame(app, width=1200, height=800, fg_color="#4f6367")
+playerFrame = CTkFrame(app, width=1200, height=800, fg_color="#4f6367")
+inner = CTkFrame(playerFrame, width=140, height=70)
 
 #Methoden
 def generateUsingAbcModel():
@@ -103,9 +104,9 @@ def pauseMusic():
     btnPlay.grid(row=0, column=0, padx=10, pady=10)
 
 def switchToPlayer():
-    progressbar.stop()
     loadingFrame.pack_forget()
-    playerFrame.pack(fill=tk.BOTH)
+    playerFrame.pack() # todo: fill=tk.BOTH 
+    inner.grid(row=0, column=0, padx=440, pady=440) 
     pauseMusic()
 
 def unmute():
@@ -121,6 +122,7 @@ def mute():
 def home():
     playerFrame.pack_forget()
     inner.grid_forget()
+    loadingFrame.forget()
     homeFrame.pack()
 
 def switchModel():
@@ -136,14 +138,14 @@ dev = CTkLabel(homeFrame, text="Developer: Bach, Sailer, Schlecht", text_color="
 
 sliderText = CTkLabel(homeFrame, text="Stelle ein wie 'expermentierfreudig' das Modell ist: ", text_color="white", font=("Verdana", 13), bg_color="#4f6367")
 
-btn = CTkButton(master=homeFrame, text="Generate Masterpiece", corner_radius=20, font=("Courier New", 45),
+btn = CTkButton(homeFrame, text="Generate Masterpiece", corner_radius=20, font=("Courier New", 45),
                 fg_color="#D9D9D9", hover_color="#EEC6C6", text_color="#FE5F55", width=600, height=100, command=generateButton)
 
 sliderTemperature = CTkSlider(homeFrame, from_=0.1, to=5, command=slider_event, button_color="#FE5F55", progress_color="#FE5F55", height=20, width=400)
 sliderTemperature.set(1)
 
 conductorImg = CTkImage(light_image=Image.open("./assets/conductorWithBackground.png"), size=(270, 270))
-conductorLabelImg = CTkLabel(master=homeFrame, image=conductorImg, text="")
+conductorLabelImg = CTkLabel(homeFrame, image=conductorImg, text="")
 
 title = CTkLabel(homeFrame, text='Little Conductor', font=("Courier New", 100),bg_color='#4f6367', text_color="white")
 
@@ -174,8 +176,6 @@ mute_img = PhotoImage(file="./assets/mute.png")
 unmute_img = PhotoImage(file="./assets/unmute.png")
 home_img = PhotoImage(file="./assets/home.png")
 
-inner = CTkFrame(playerFrame, width=140, height=70)
-
 #hover_color="#EEC6C6",
 #fg_color="#4f6367",  text_color="#FE5F55",
 btnPause = CTkButton(master = inner, image=pause_img,command=pauseMusic, bg_color="transparent", fg_color="transparent", hover_color="#87A9B0",  height=50, text="")
@@ -187,7 +187,8 @@ btnUnmute = CTkButton(master = inner, image=unmute_img, command=unmute, bg_color
 btnPause.grid(row=0, column=0, padx=10, pady=10)
 btnMute.grid(row=0, column=1, padx=10, pady=10)
 
-inner.grid(row=0, column=0, padx=440, pady=440) 
+
+
 
 conductorImg = CTkImage(light_image=Image.open("./assets/conductorWithBackground.png"), size=(250, 250))
 conductorLabelImg = CTkLabel(master=playerFrame, image=conductorImg, text="")

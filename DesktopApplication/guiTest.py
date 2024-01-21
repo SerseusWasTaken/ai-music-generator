@@ -18,7 +18,7 @@ from Abc.AbcModelAPI import AbcModelAPI
 
 #Model management
 use_abc_model = False
-abcModel = AbcModelAPI('./abc/training_checkpoints')
+abcModel = AbcModelAPI('./Abc/training_checkpoints')
 
 #Variablen User
 temperature = 1
@@ -50,7 +50,7 @@ def generateUsingAbcModel():
 def generateUsingMIDIModel():
     global temperature
     #todo: prüfe ob path bei allen richtig oder ob model in assets holen
-    model = tf.keras.saving.load_model('../models/tuner_best_mode.keras')
+    model = tf.keras.saving.load_model('models/tuner_best_mode.keras')
     modelAPI = MusicRNN(model, temperature, 128)
 
     data_dir = pathlib.Path('data/maestro-v3.0.0')

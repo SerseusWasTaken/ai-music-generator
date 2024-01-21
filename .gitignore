@@ -6,3 +6,5 @@ data/*
 */untitled_project/*
 *.DS_store*
 */training_checkpoints/*
+*/Abc/__pycache__
+*/Abc/training_checkpoints

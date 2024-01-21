@@ -7,10 +7,10 @@ import keras
 from helperFunctions import mse_with_positive_pressure
 
 def main():
-    creator = ModelCreator()
-    creator.createModel()
+    #creator = ModelCreator()
+    #creator.createModel()
 
-    """
+    
     model = tf.keras.saving.load_model('models/tuner_best_mode.keras')
     modelAPI = MusicRNN(model, 2.0, 128)
 
@@ -25,7 +25,7 @@ def main():
     filenames = glob.glob(str(data_dir/'**/*.mid*'))
     sample_file = filenames[1]
 
-    modelAPI.createMusicFile(sample_file)"""
+    modelAPI.createMusicFile(sample_file)
 
     
     

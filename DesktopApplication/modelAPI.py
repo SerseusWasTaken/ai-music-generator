@@ -19,18 +19,16 @@ class MusicRNN:
         self,
         notes: np.ndarray, 
         model: tf.keras.Model, 
-        temperature: float = 1.0) -> tuple[int, float, float]:
-        """Generates a note as a tuple of (pitch, step, duration), using a trained sequence model."""
-
-        assert temperature > 0
+        temperature: float = 1.0): 
+        """Generates notes as a tuple of (pitch, step, duration), using a trained sequence model."""
 
         # Add batch dimension
         inputs = tf.expand_dims(notes, 0)
 
         predictions = model.predict(inputs)
-        pitch_logits = predictions[0]
-        step = predictions[1]
-        duration = predictions[2]
+        pitch_logits = predictions['pitch']
+        step = predictions['step']
+        duration = predictions['duration']
 
         pitch_logits /= temperature
         pitch = tf.random.categorical(pitch_logits, num_samples=1)
@@ -39,10 +37,16 @@ class MusicRNN:
         step = tf.squeeze(step, axis=-1)
 
         # `step` and `duration` values should be non-negative
-        step = tf.maximum(0, step)
-        duration = tf.maximum(0, duration)
+        print("Pitch: ")
+        print(pitch)
+        print("Step: ")
+        print(step)
+        print("Duration: ")
+        print(duration)
+        step = tf.maximum(0.0, step)
+        duration = tf.maximum(0.0, duration)
 
-        return int(pitch), float(step), float(duration)
+        return pitch, step, duration
 
 
     def createMusicFile(self, sample_file):
@@ -55,8 +59,13 @@ class MusicRNN:
 
         generated_notes = []
         prev_start = 0
-        for _ in range(self.num_predictions):
-            pitch, step, duration = self.__predict_next_note(input_notes, self.model, self.temperature)
+        pitchT, stepT, durationT = self.__predict_next_note(input_notes, self.model, self.temperature)
+        for i in range(len(pitchT)):
+            pitch = int(pitchT[i])
+            step = float(stepT[i]) * 10
+            duration = float(durationT[i]) * 10
+            step = tf.maximum(0.0, step)
+            duration = tf.maximum(0.0, duration)
             start = prev_start + step
             end = start + duration
             input_note = (pitch, step, duration)

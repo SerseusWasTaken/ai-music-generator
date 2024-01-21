@@ -12,6 +12,7 @@ import glob
 from customtkinter import *
 import threading
 from tkinter import PhotoImage
+from random import randint
 
 from Abc.AbcModelAPI import AbcModelAPI
 
@@ -61,7 +62,9 @@ def generateUsingMIDIModel():
             cache_dir='.', cache_subdir='data',
         )
     filenames = glob.glob(str(data_dir/'**/*.mid*'))
-    sample_file = filenames[1]
+    #random number between 0 and 10
+    filenumber = randint(0, 10)
+    sample_file = filenames[filenumber]
 
     modelAPI.createMusicFile(sample_file)
 

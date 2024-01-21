@@ -15,7 +15,6 @@ from tkinter import PhotoImage
 
 from Abc.AbcModelAPI import AbcModelAPI
 
-
 #Model management
 use_abc_model = False
 abcModel = AbcModelAPI('./abc/training_checkpoints')
@@ -133,11 +132,11 @@ def switchModel():
         sliderTemperature.configure(state="normal",progress_color="#FE5F55", button_color="#FE5F55")
 
 #Define  Interface Home
-dev = CTkLabel(homeFrame, text="Developer: Bach, Sailer, Schlecht", text_color="white", font=("Comfortaa", 13), bg_color="#4f6367", height=10)
+dev = CTkLabel(homeFrame, text="Developer: Bach, Sailer, Schlecht", text_color="white", font=("Verdana", 13), bg_color="#4f6367", height=10)
 
-sliderText = CTkLabel(homeFrame, text="Stelle ein wie 'expermentierfreudig' das Modell ist: ", text_color="white", font=("Comfortaa", 13), bg_color="#4f6367")
+sliderText = CTkLabel(homeFrame, text="Stelle ein wie 'expermentierfreudig' das Modell ist: ", text_color="white", font=("Verdana", 13), bg_color="#4f6367")
 
-btn = CTkButton(master=homeFrame, text="Generate Masterpiece", corner_radius=20, font=("Amatic SC", 45),
+btn = CTkButton(master=homeFrame, text="Generate Masterpiece", corner_radius=20, font=("Courier New", 45),
                 fg_color="#D9D9D9", hover_color="#EEC6C6", text_color="#FE5F55", width=600, height=100, command=generateButton)
 
 sliderTemperature = CTkSlider(homeFrame, from_=0.1, to=5, command=slider_event, button_color="#FE5F55", progress_color="#FE5F55", height=20, width=400)
@@ -146,7 +145,7 @@ sliderTemperature.set(1)
 conductorImg = CTkImage(light_image=Image.open("./assets/conductorWithBackground.png"), size=(270, 270))
 conductorLabelImg = CTkLabel(master=homeFrame, image=conductorImg, text="")
 
-title = CTkLabel(homeFrame, text='Little Conductor', font=("Amatic SC", 200),bg_color='#4f6367', text_color="white")
+title = CTkLabel(homeFrame, text='Little Conductor', font=("Courier New", 100),bg_color='#4f6367', text_color="white")
 
 currentModel = StringVar(value="off")
 switch = CTkSwitch(homeFrame, command=switchModel, variable=currentModel, onvalue="on", offvalue="off", text="Use ABC Model", progress_color="#FE5F55", text_color="white")

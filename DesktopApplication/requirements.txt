@@ -1,0 +1,14 @@
+customtkinter==5.2.2
+keras==2.14.0
+keras_tuner==1.4.6
+mitdeeplearning==0.6.1
+numpy==1.26.4
+pandas==2.2.0
+Pillow==10.1.0
+Pillow==10.2.0
+pretty_midi==0.2.10
+pygame==2.5.2
+seaborn==0.13.2
+tensorflow==2.14.0
+tensorflow_macos==2.14.0
+tqdm==4.66.1

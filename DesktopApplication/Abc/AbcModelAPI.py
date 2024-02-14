@@ -62,4 +62,4 @@ class AbcModelAPI():
             num_of_songs = len(generated_songs)
             print(num_of_songs)
 
-        lab1.play_song(generated_songs[1])
+        lab1.play_song(generated_songs[0])

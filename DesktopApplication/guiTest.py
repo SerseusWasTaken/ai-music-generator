@@ -107,10 +107,10 @@ def pauseMusic():
     btnPlay.grid(row=0, column=0, padx=10, pady=10)
 
 def switchToPlayer():
+    pauseMusic()
     loadingFrame.pack_forget()
     playerFrame.pack() # todo: fill=tk.BOTH 
     inner.grid(row=0, column=0, padx=440, pady=440) 
-    pauseMusic()
 
 def unmute():
     mixer.music.set_volume(100.0)
@@ -123,6 +123,7 @@ def mute():
     btnUnmute.grid(row=0, column=1, padx=10, pady=10)
 
 def home():
+    pauseMusic()
     playerFrame.pack_forget()
     inner.grid_forget()
     loadingFrame.forget()
@@ -183,7 +184,7 @@ home_img = PhotoImage(file="./assets/home.png")
 #fg_color="#4f6367",  text_color="#FE5F55",
 btnPause = CTkButton(master = inner, image=pause_img,command=pauseMusic, bg_color="transparent", fg_color="transparent", hover_color="#87A9B0",  height=50, text="")
 btnMute = CTkButton(master = inner, image=mute_img,  command=mute,  bg_color="transparent", fg_color="transparent", hover_color="#87A9B0", height=50, text="")
-btnPlay = CTkButton(master = inner, image=play_img, command=lambda: playMusic(), bg_color="transparent", fg_color="transparent", hover_color="#87A9B0", height=50, text="")
+btnPlay = CTkButton(master = inner, image=play_img, command=playMusic, bg_color="transparent", fg_color="transparent", hover_color="#87A9B0", height=50, text="")
 btnUnmute = CTkButton(master = inner, image=unmute_img, command=unmute, bg_color="transparent", fg_color="transparent",hover_color="#87A9B0",  height=50, text="")
 
 # Mute/Unmute und Play/Pause switchen wenn gedrückt

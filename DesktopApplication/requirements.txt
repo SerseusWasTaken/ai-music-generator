@@ -10,5 +10,4 @@ pretty_midi==0.2.10
 pygame==2.5.2
 seaborn==0.13.2
 tensorflow==2.14.0
-tensorflow_macos==2.14.0
 tqdm==4.66.1

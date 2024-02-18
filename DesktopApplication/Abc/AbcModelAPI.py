@@ -57,7 +57,9 @@ class AbcModelAPI():
         generated_songs = 0
         # repeat until at least one song is generated
         while(num_of_songs == 0):
-            generated_text = self.__generate_text(self.model, start_string="X", generation_length=1000)
+            generated_text = self.__generate_text(
+                self.model, start_string="X", generation_length=1000
+                )
             generated_songs = lab1.extract_song_snippet(generated_text)
             num_of_songs = len(generated_songs)
             print(num_of_songs)

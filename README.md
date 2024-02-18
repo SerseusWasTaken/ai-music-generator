@@ -7,7 +7,7 @@
 for example through 
 ```choco install fluidsynth```
 
-## 2. Install PyFluidSynth
+## 2. Install PyFluidSynth (Windows)
 
 Download https://github.com/nwhitehead/pyfluidsynth/archive/master.zip  
 Open the folder (.../pyfluidsynth-master/pyfluidsynth-master) in cmd and use follwing command  
